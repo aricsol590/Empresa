@@ -7,39 +7,37 @@
     <script src="https://alcdn.msauth.net/browser/2.17.0/js/msal-browser.min.js"></script>
 </head>
 <body>
-    <h2>Iniciar sesión con Microsoft</h2>
+    <h2>Iniciar Sesión con Microsoft</h2>
     <button onclick="login()">Login con Microsoft</button>
     <p id="user-info"></p>
 
     <script>
         // Configuración de MSAL.js
         const msalConfig = {
-    auth: {
-        clientId: "bb8a6f63-57cd-4994-8f97-79efcb69b4c1",  // Este clientId es un ejemplo público proporcionado por Microsoft
-        authority: "https://login.microsoftonline.com/common",  // Permite logins de usuarios con cuentas de Microsoft
-        redirectUri: window.location.href // La URL de redirección a la misma página
-    }
-};
+            auth: {
+                clientId: "bb8a6f63-57cd-4994-8f97-79efcb69b4c1", // Client ID público de Microsoft
+                authority: "https://login.microsoftonline.com/common", // Usamos 'common' para permitir cualquier cuenta Microsoft
+                redirectUri: window.location.href // URL de redirección a la misma página
+            }
+        };
 
-
-        // Crear una instancia de MSAL
+        // Crear instancia de MSAL
         const msalInstance = new msal.PublicClientApplication(msalConfig);
 
-        // Función de login
+        // Función para manejar el login
         async function login() {
             try {
-                // Iniciar el login con scopes
+                // Solicitar login con el scope de OpenID y el perfil
                 const loginResponse = await msalInstance.loginPopup({
-                    scopes: ["openid", "profile", "email"] // Scopes para obtener perfil y correo
+                    scopes: ["openid", "profile", "email"]
                 });
 
-                // Mostrar el nombre de usuario
-                console.log("Login exitoso:", loginResponse);
+                // Mostrar el resultado de login
+                console.log("Login Exitoso:", loginResponse);
                 document.getElementById("user-info").innerText = 
-                    `Hola, ${loginResponse.account.username}`; // Mostrar el nombre de usuario
+                    `Hola, ${loginResponse.account.username}`; // Mostrar nombre de usuario
             } catch (error) {
                 console.error("Error en el login:", error);
-                alert("Error en el login. Intenta nuevamente.");
             }
         }
     </script>
