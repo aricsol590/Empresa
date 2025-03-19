@@ -3,35 +3,43 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login con Microsoft 365</title>
+    <title>Login con Microsoft</title>
     <script src="https://alcdn.msauth.net/browser/2.17.0/js/msal-browser.min.js"></script>
 </head>
 <body>
-    <h2>Iniciar Sesión con Microsoft</h2>
+    <h2>Iniciar sesión con Microsoft</h2>
     <button onclick="login()">Login con Microsoft</button>
     <p id="user-info"></p>
 
     <script>
+        // Configuración de MSAL.js
         const msalConfig = {
-            auth: {
-                clientId: "d69f6d3b-d78e-4e62-a65b-98f1c77ad79a", // ID pública de Microsoft
-                authority: "https://login.microsoftonline.com/common",
-                redirectUri: window.location.origin
-            }
-        };
+    auth: {
+        clientId: "bb8a6f63-57cd-4994-8f97-79efcb69b4c1",  // Este clientId es un ejemplo público proporcionado por Microsoft
+        authority: "https://login.microsoftonline.com/common",  // Permite logins de usuarios con cuentas de Microsoft
+        redirectUri: window.location.href // La URL de redirección a la misma página
+    }
+};
 
+
+        // Crear una instancia de MSAL
         const msalInstance = new msal.PublicClientApplication(msalConfig);
 
+        // Función de login
         async function login() {
             try {
+                // Iniciar el login con scopes
                 const loginResponse = await msalInstance.loginPopup({
-                    scopes: ["openid", "profile", "email"]
+                    scopes: ["openid", "profile", "email"] // Scopes para obtener perfil y correo
                 });
-                console.log("Login Exitoso:", loginResponse);
+
+                // Mostrar el nombre de usuario
+                console.log("Login exitoso:", loginResponse);
                 document.getElementById("user-info").innerText = 
-                    `Hola, ${loginResponse.account.username}`;
+                    `Hola, ${loginResponse.account.username}`; // Mostrar el nombre de usuario
             } catch (error) {
                 console.error("Error en el login:", error);
+                alert("Error en el login. Intenta nuevamente.");
             }
         }
     </script>

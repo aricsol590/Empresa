@@ -1,11 +1,19 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
+    <title>Login con Microsoft</title>
 </head>
 <body>
-    
+    <h2>Iniciar Sesión con Microsoft</h2>
+    <a href="https://login.microsoftonline.com/common/oauth2/v2.0/authorize?
+        client_id=bb8a6f63-57cd-4994-8f97-79efcb69b4c1
+        &response_type=token
+        &redirect_uri=https://tu-dominio.com/callback
+        &scope=openid profile email"
+    >
+        <button>Login con Microsoft</button>
+    </a>
 </body>
 </html>
