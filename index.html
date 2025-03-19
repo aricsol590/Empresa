@@ -1,11 +1,39 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Index</title>
+    <title>Login con Microsoft 365</title>
+    <script src="https://alcdn.msauth.net/browser/2.17.0/js/msal-browser.min.js"></script>
 </head>
 <body>
-    <h1>Index</h1>
+    <h2>Iniciar Sesión con Microsoft</h2>
+    <button onclick="login()">Login con Microsoft</button>
+    <p id="user-info"></p>
+
+    <script>
+        const msalConfig = {
+            auth: {
+                clientId: "d69f6d3b-d78e-4e62-a65b-98f1c77ad79a", // ID pública de Microsoft
+                authority: "https://login.microsoftonline.com/common",
+                redirectUri: window.location.origin
+            }
+        };
+
+        const msalInstance = new msal.PublicClientApplication(msalConfig);
+
+        async function login() {
+            try {
+                const loginResponse = await msalInstance.loginPopup({
+                    scopes: ["openid", "profile", "email"]
+                });
+                console.log("Login Exitoso:", loginResponse);
+                document.getElementById("user-info").innerText = 
+                    `Hola, ${loginResponse.account.username}`;
+            } catch (error) {
+                console.error("Error en el login:", error);
+            }
+        }
+    </script>
 </body>
 </html>
